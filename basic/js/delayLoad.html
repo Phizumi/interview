@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Delay load</title>
+
+</head>
+<body>
+<!--
+    reference: https://www.growingwiththeweb.com/2014/02/async-vs-defer-attributes.html
+    defer: 在 html parsing 完成后执行，按顺序执行
+    async: download 与 html parsing 并行，executive 会阻塞 html parsing
+
+-->
+    <div id="box">qwerqwer</div>
+    <script async type="text/javascript" src="../temp.js"></script>
+    <script defer type="text/javascript" src="../temp.js"></script>
+</body>
+</html>
