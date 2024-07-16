@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ES Module 模块的特性</title>
+</head>
+<body>
+  <script type="module">
+    console.log('this is ES Module')
+  </script>
+
+  <!-- 1. ESM Strict Mode is used automatically, ignore the "use strict" directive -->
+  <script type="module">
+    console.log(this) // undefined in ES Module, Window in non-strict mode and execute before modules
+  </script>
+
+  <!-- 2. every ESM runs in a separate scope -->
+  <script type="module">
+    let a = 1
+    console.log(a) // 1
+  </script>
+  <script type="module">
+    console.log(a) // 1
+  </script>
+
+  <!-- 3. ESM 通过 CORS 方式请求外部js模块 -->
+  <!-- 4. ESM 的 script 会延迟执行，类似 defer -->
+  <script type="module" src="demo.js"></script>
+  <p>waiting to render</p>
+</body>
+</html>
