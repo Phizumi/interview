@@ -41,15 +41,15 @@ module.exports = {
         // 一个正常由 file-loader 解析生成，一个仅由 css--loader 解析引入
         type: 'javascript/auto', // required
       },
-      {
-        test: /\.html$/,
-        use: {
-          loader: 'html-loader',
-          options: {
-          
-          },
-        },
-      }
+      // {
+      //   test: /\.html$/,
+      //   use: {
+      //     loader: 'html-loader',
+      //     options: {
+      //
+      //     },
+      //   },
+      // }
     ]
   }
 }
