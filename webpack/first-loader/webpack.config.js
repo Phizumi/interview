@@ -11,12 +11,12 @@ class MyWebpackPlugin {
       compilation.hooks.processAssets.tapPromise({
         name: 'MyWebpackPlugin',
         stage: Compilation.PROCESS_ASSETS_STAGE_ADDITIONAL,
-      }, async (compilation) => {
-        for (const name in compilation) {
+      }, async (assets) => {
+        for (const name in assets) {
           if (name.endsWith('.js')) {
-            const content = compilation[name].source();
+            const content = assets[name].source();
             const withoutComments = content.replace(/\/\*[\s\S]*?\*\//g, '')
-            compilation[name] = {
+            assets[name] = {
               source: () => withoutComments,
               size: () => withoutComments.length
             }

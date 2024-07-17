@@ -1,5 +1,5 @@
-const { type } = require('os');
 const path = require('path');
+// const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: './src/main.js',
@@ -9,10 +9,20 @@ module.exports = {
     publicPath: 'dist/'
   },
   mode: 'none',
+  devServer: {
+    port: 8080,
+    compress: true,
+    open: true,
+    hot: true,
+    static: {
+      directory: path.join(__dirname, 'src'),
+    },
+  },
   module: {
     rules: [
       {
         test: /\.js$/,
+        exclude: /(node_modules|bower_components)/,
         use: {
           loader: 'babel-loader',
           options: {
@@ -41,15 +51,11 @@ module.exports = {
         // 一个正常由 file-loader 解析生成，一个仅由 css--loader 解析引入
         type: 'javascript/auto', // required
       },
-      // {
-      //   test: /\.html$/,
-      //   use: {
-      //     loader: 'html-loader',
-      //     options: {
-      //
-      //     },
-      //   },
-      // }
     ]
-  }
+  },
+  plugins: [
+    // new HtmlWebpackPlugin({
+    //   template: './src/index.html'
+    // })
+  ]
 }
