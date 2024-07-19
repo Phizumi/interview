@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "module": "ESNext",
+    "skipLibCheck": true,
+    "noEmit": true,
+    "moduleResolution": "Node",
+    "lib": ["ES2017", "DOM"],
+    "allowSyntheticDefaultImports": true
+  }
+}
