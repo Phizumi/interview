@@ -1,10 +1,12 @@
+import path from 'path'
 import { defineConfig } from 'vite'
 import checker from "vite-plugin-checker";
-import path from 'path'
+import viteCompression from 'vite-plugin-compression';
+
 
 export default defineConfig({
   build: {
-    minify: false,
+    // minify: false,
     rollupOptions: {
       input: {
         main: path.resolve(__dirname, 'index.html'),
@@ -13,14 +15,15 @@ export default defineConfig({
       output: {
         manualChunks: (id: string) => {
           // console.log('id', id)
-          if (id.includes('node_modules')) {
-            return 'vendor'
-          }
+          // if (id.includes('node_modules')) {
+          //   return 'vendor'
+          // }
         }
       }
     }
   },
   plugins: [
-    checker({ typescript: true })
+    checker({ typescript: true }),
+    viteCompression()
   ]
 })
