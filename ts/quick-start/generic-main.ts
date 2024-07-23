@@ -47,13 +47,42 @@ identity(1, 'hello')
 // }
 
 // 类型参数默认值
-class Person<T = string> {
-  list: T[] = []
-  add(el: T) {
-    this.list.push(el)
-  }
+// class Person<T = string> {
+//   list: T[] = []
+//   add(el: T) {
+//     this.list.push(el)
+//   }
+// }
+
+// let foo = new Person<number | string>()
+// foo.add(1)
+// foo.add('2')
+
+// generic 约束
+// 大类型 extends 小类型
+// function fn2<T extends string>(a: T) {
+//   console.log(a.length)
+//   return a
+// }
+// fn2<any>('123')
+
+// let obj = {
+//   name: 'Peter',
+//   age: 18
+// }
+
+// function fn3<T extends keyof U, U>(key: T, obj: U) {
+//   return obj[key]
+// }
+// fn3('age', obj)
+
+// generic 嵌套
+interface Box<T> {
+  item: T
 }
 
-let foo = new Person<number | string>()
-foo.add(1)
-foo.add('2')
+let b: Box<Box<string>> = {
+  item: {
+    item: 'hello'
+  }
+}
