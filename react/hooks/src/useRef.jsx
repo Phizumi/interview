@@ -1,14 +1,15 @@
 import { forwardRef, useImperativeHandle, useRef, useState } from 'react'
 
-// function App() {
+// function UseCallback() {
 //   const [count, setCount] = useState(0)
 //   const prevCount = useRef()
 //   const handleClick = () => {
 //     // 1. store previous value
+//     // won't trigger re-render
 //     prevCount.current = count
 //     setCount(count + 1)
 //   }
-
+//
 //   return (
 //     <div>
 //       <p>latest count: {count}</p>
@@ -18,9 +19,9 @@ import { forwardRef, useImperativeHandle, useRef, useState } from 'react'
 //   )
 // }
 
-// export default App
+// export default UseCallback
 
-// export default function App() {
+// export default function UseCallback() {
 //   // 2. get DOM
 //   const inputRef = useRef(null)
 
