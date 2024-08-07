@@ -1,28 +1,28 @@
-import {useEffect, useState} from "react";
-
+import { useEffect, useState } from 'react'
 
 function fetchData() {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     setTimeout(() => {
-      resolve('Hello, world!');
-    }, 1000);
-  });
+      resolve('Hello, world!')
+    }, 1000)
+  })
 }
 
 export default function App() {
   console.log('render')
   const [count, setCount] = useState(0)
 
+  // useEffect: VDOM -> DOM -> useEffect
+  // useLayoutEffect: VDOM -> useLayoutEffect -> DOM
   // deps: [] means run once
   // deps: [count] means run when count changes
-  // deps: ignore means run every time
+  // deps: omit means run every time
   useEffect(() => {
     const start = async () => {
-      const data = await fetchData();
-      console.log(data);
+      const data = await fetchData()
+      console.log(data)
     }
-    start();
-
+    start()
     return () => {
       // clean effect like componentWillUnmount
       // e.g. unsubscribe event listener
@@ -30,7 +30,6 @@ export default function App() {
       console.log('clean up')
     }
   }, [])
-
 
   return (
     <div>
