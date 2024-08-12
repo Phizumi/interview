@@ -7,7 +7,7 @@ const Btn = memo(({ onClick }) => {
   return <button onClick={onClick}>Click ChildComp</button>
 })
 
-export default function UseCallback() {
+export default function App() {
   const [count, setCount] = useState(0)
 
   // to memorize function
