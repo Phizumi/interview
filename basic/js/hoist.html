@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>变量提升</title>
+  </head>
+  <body>
+    <script>
+      /**
+       * 在代码执行之前，将 `变量声明` 和 `函数声明` 提升到 `当前作用域` 的顶部。
+       */
+      function foo() {
+        console.log(a)
+        var a = 1
+        console.log(a)
+      }
+      // 等价于
+      // function foo() {
+      //   var a
+      //   console.log(a)
+      //   a = 2
+      //   console.log(a)
+      // }
+      foo()
+
+      /**
+       * let 与 var 的区别
+       * 1. 污染全局 var a = 1 => window.a = 1
+       * 2. 块级作用域
+       * 3. 重复声明 var 可以重复声明
+       * 4. 暂时性死区 TDZ let 有提升，但是无法访问
+       */
+      console.log('b', b)
+      let b = 2
+    </script>
+  </body>
+</html>
