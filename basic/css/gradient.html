@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>渐变文字加阴影</title>
+    <style>
+      body {
+        background-color: #222;
+      }
+      .button {
+        width: 240px;
+        height: 44px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(to bottom, #ffffff, #ffe1a6);
+        box-shadow: 0px 5px 10px rgba(255, 241, 237, 0.67), inset 0px -10px 15px rgba(255, 255, 255, 0.5),
+          inset 0px -3px 4px rgba(255, 255, 255, 0.8);
+        border-radius: 50px;
+        /* transition: all 0.3s ease; */
+      }
+      /* .button:hover {
+        background-color: #ccc;
+      }
+      .button:active {
+        background-color: #aaa;
+      } */
+      .noselect {
+        -webkit-user-select: none; /* Safari 和 Chrome */
+        -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* IE10+ */
+        user-select: none; /* 标准语法 */
+      }
+
+      .wrapper {
+        width: 100%;
+        height: 100%;
+        position: relative;
+      }
+      .text {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        position: absolute;
+        font-size: 20px;
+        font-weight: bold;
+        background: linear-gradient(to bottom, #ff0000, #ff710a);
+        -webkit-background-clip: text; /* Safari */
+        background-clip: text;
+        color: transparent; /* 使文本颜色透明以显示背景渐变 */
+        z-index: 2;
+      }
+      .text-shadow {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1;
+        position: absolute;
+        font-size: 20px;
+        font-weight: bold;
+        color: transparent;
+        text-shadow: 0px 10px 10px rgba(255, 115, 115, 0.5);
+      }
+
+      .trapezoid {
+        width: calc(335px / 2);
+        height: 40px;
+        background-color: #ffe1a6;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+        border-bottom-left-radius: 40px;
+        border-bottom-right-radius: 40px;
+        background: linear-gradient(to bottom, #e60012 30%, #ff0000 75%, #ffed95);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="button noselect">
+      <div class="wrapper">
+        <div class="text">渐变文字</div>
+        <div class="text-shadow">渐变文字</div>
+      </div>
+    </div>
+    <br />
+    <br />
+    <div class="trapezoid"></div>
+  </body>
+</html>
