@@ -48,6 +48,7 @@ animal = cat
 
 // 条件类型
 type Bool = Cat extends Animal ? 'yes' : 'no'
+// T extends 'x' means T 能否复制给 'x'
 type Test<T> = T extends 'x' ? string : number
 
 /**
