@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Countdown</title>
+    <style>
+      .countdown {
+        font-size: 48px;
+        font-family: Arial, sans-serif;
+        text-align: center;
+        margin-top: 100px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="countdown" id="countdown">00:60:00</div>
+    <script>
+      const targetTime = new Date(Date.now() + 60 * 60 * 1000).getTime();
+      let rafId = null;
+      let lastUpdateTime = 0;
+
+      function updateCountdown(timestamp) {
+        // 检查是否需要更新（每秒更新一次）
+        if (timestamp - lastUpdateTime < 900) {
+          rafId = requestAnimationFrame(updateCountdown);
+          return;
+        }
+
+        const currentTime = Date.now();
+        const timeLeft = Math.max(0, targetTime - currentTime);
+
+        // 计算小时、分钟和秒
+        const hours = Math.floor(timeLeft / (1000 * 60 * 60));
+        const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+        // 格式化显示
+        const display = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        document.getElementById('countdown').textContent = display;
+
+        lastUpdateTime = timestamp;
+
+        // 如果倒计时未结束，继续更新
+        if (timeLeft > 0) {
+          rafId = requestAnimationFrame(updateCountdown);
+        }
+      }
+
+      // 处理页面可见性变化
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+          // 页面不可见时取消动画
+          if (rafId !== null) {
+            cancelAnimationFrame(rafId);
+            rafId = null;
+          }
+        } else {
+          // 页面可见时恢复动画
+          if (rafId === null) {
+            rafId = requestAnimationFrame(updateCountdown);
+          }
+        }
+      });
+
+      // 开始倒计时
+      rafId = requestAnimationFrame(updateCountdown);
+    </script>
+  </body>
+</html>
