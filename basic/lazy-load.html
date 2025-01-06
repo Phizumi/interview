@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Title</title>
+  </head>
+  <body>
+    <ul id="list"></ul>
+
+    <script>
+      const ul = document.getElementById('list')
+      const arr = new Array(100000).fill(0)
+
+      function render(list, ele, start) {
+        for (let i = 0; i < list.length; i++) {
+          ul.appendChild(ele(`${start}-${i}`))
+        }
+      }
+
+      function createLi(text) {
+        const li = document.createElement('li')
+        li.innerHTML = text
+
+        return li
+      }
+
+      let frameLoop = (function (data, count) {
+        const d = data
+        const c = count
+        let start = 0
+        const pageCount = Math.ceil(d.length / count)
+        let isRendering = false // 控制是否正在渲染
+
+        // 添加滚动监听
+        window.addEventListener('scroll', () => {
+          // 获取最后一个 li 元素
+          const lastLi = ul.lastElementChild
+          if (!lastLi || isRendering) return
+
+          // 检查最后一个元素是否接近可视区域
+          const rect = lastLi.getBoundingClientRect()
+          const threshold = window.innerHeight + 100 // 提前 100px 加载
+
+          if (rect.bottom <= threshold && start < pageCount) {
+            nextFrame()
+          }
+        })
+
+        function nextFrame() {
+          if (isRendering) return
+          isRendering = true
+
+          window.requestAnimationFrame(() => {
+            const list = d.slice(start * c, start * c + c)
+            render(list, createLi, start)
+            start += 1
+            isRendering = false
+
+            // 初始加载多一页，避免首屏太空
+            if (start === 1) {
+              nextFrame()
+            }
+          })
+        }
+
+        return nextFrame
+      })(arr, 20)
+
+      frameLoop() // 初始加载第一页
+      // 不要设置 frameLoop = null，因为需要保持引用
+
+      // function straightLoop() {
+      //   for (let i = 0; i < arr.length; i++) {
+      //     ul.appendChild(createLi(`${i}`))
+      //   }
+      // }
+
+      // straightLoop()
+      // straightLoop = null
+    </script>
+  </body>
+</html>
