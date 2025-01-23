@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Scrollable Tabs</title>
+    <style>
+      body {
+        background-color: #f3f4f6;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      }
+
+      .tabs-container {
+        width: 600px;
+        background: white;
+        border-radius: 12px;
+        padding: 4px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+                    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      }
+
+      .tabs {
+        display: flex;
+        overflow-x: hidden;
+        padding: 8px;
+        scroll-behavior: smooth;
+        white-space: nowrap;
+        gap: 8px;
+        position: relative;
+      }
+
+      .tab {
+        padding: 8px 16px;
+        background-color: #f9fafb;
+        border: 1px solid #e5e7eb;
+        cursor: pointer;
+        border-radius: 8px;
+        user-select: none;
+        font-size: 14px;
+        font-weight: 500;
+        color: #4b5563;
+        transition: all 0.2s ease;
+        position: relative;
+        z-index: 1;
+        display: inline-block;
+      }
+
+      .tab:hover {
+        background-color: #f3f4f6;
+        border-color: #d1d5db;
+        transform: translateY(-1px);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      }
+
+      .tab.active {
+        background-color: #3b82f6;
+        color: white;
+        border-color: #2563eb;
+        box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.5);
+      }
+
+      .tab.active:hover {
+        background-color: #2563eb;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.6);
+      }
+
+      /* 添加滚动条样式 */
+      .tabs::-webkit-scrollbar {
+        height: 4px;
+      }
+
+      .tabs::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 2px;
+      }
+
+      .tabs::-webkit-scrollbar-thumb {
+        background: #d1d5db;
+        border-radius: 2px;
+      }
+
+      .tabs::-webkit-scrollbar-thumb:hover {
+        background: #9ca3af;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="tabs-container">
+      <div class="tabs">
+        <div class="tab active">Dashboard</div>
+        <div class="tab">Projects</div>
+        <div class="tab">Team</div>
+        <div class="tab">Calendar</div>
+        <div class="tab">Documents</div>
+        <div class="tab">Reports</div>
+        <div class="tab">Messages</div>
+        <div class="tab">Settings</div>
+        <div class="tab">Analytics</div>
+        <div class="tab">Integrations</div>
+        <div class="tab">Help</div>
+        <div class="tab">Profile</div>
+      </div>
+    </div>
+
+    <script>
+      const tabs = document.querySelector(".tabs");
+
+      // 添加鼠标滚轮事件监听
+      tabs.addEventListener("wheel", (e) => {
+        e.preventDefault(); // 阻止默认的垂直滚动
+        const scrollSpeed = 3;
+        tabs.scrollLeft += e.deltaY * scrollSpeed;
+      });
+
+      // 使用事件委托处理标签点击
+      tabs.addEventListener("click", (e) => {
+        const clickedTab = e.target;
+        // 确保点击的是标签元素
+        if (clickedTab.classList.contains("tab")) {
+          // 移除当前激活的标签
+          const activeTab = tabs.querySelector(".tab.active");
+          activeTab?.classList.remove("active");
+          // 激活被点击的标签
+          clickedTab.classList.add("active");
+        }
+      });
+    </script>
+  </body>
+</html>
