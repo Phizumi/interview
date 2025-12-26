@@ -9,7 +9,7 @@ export const debounce = (fn, delay) => {
   }
 }
 
-// throttle 节流 技能cd
+// throttle 节流 技能cd(countdown)
 export const throttle = (fn, delay) => {
   let timer = null
   return function () {

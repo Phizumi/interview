@@ -3,69 +3,101 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Inherit</title>
+    <title>Inherit 继承</title>
   </head>
   <body>
-    <script>
+    <script src="./inherit.js"></script>
+    <!-- <script>
+      /**
+       * 继承
+       * 1. 原型链继承
+       * 2. 构造函数继承
+       * 3. 组合继承
+       * 4. 寄生组合继承
+       * 5. class
+       */
+
       /**
        * 1. 原型链继承
-       * 优点：复用父类方法和属性
-       * 缺点：
-       *  1. 父类 引用属性 被所有子类共享，相互影响
-       *  2. 无法向父类传参
-       *
-       * 2. 构造函数继承
-       * 优点：父类的 引用属性 不在被共享，互不影响
-       * 缺点：子类无法访问父类的原型属性
-       *
-       * 3. 组合继承
-       * 优点：
-       *  1. 复用父类方法和属性
-       *  2. 父类引用数据不会被共享
-       * 缺点：
-       *  调用了两次父类构造函数，有两份一样的属性和方法，影响性能
-       *
-       * 4. 寄生组合继承
-       *
-       * 5. class 继承
-       */
+       * 优点：父类的方法可以被子类继承
+       * 缺点：1. 引用类型，会导致子类实例对象的属性被共享
+       *       2. 无法传递参数
+       * */
       function Person() {
-        this.name = 'Tom'
-        this.fruits = ['apple']
+        this.name = '小明'
+        this.age = 18
+        // this.getName = () => {
+        //   console.log(this.name) // 小明，因为 this 在创建时已经确定，指向的是 Person 的实例对象
+        // }
         this.getName = function () {
-          console.log(this.name)
+          console.log(this.name) // 小红，因为 this 指向 实例对象
         }
       }
-
-      Person.prototype.get = function () {
-        console.log('prototype get')
+      Person.prototype.say = function () {
+        console.log(`my name is ${this.name}`)
       }
 
       function Student() {
+        /** 2. 构造函数继承 */
+        /**
+         * 优点：1. 引用类型的属性不会被共享
+         * 缺点：1. 无法继承父类的原型方法
+         * */
         Person.call(this)
       }
+      /**
+       * 3. 组合继承
+       * 优点：1. 可以继承父类的原型方法
+       * 缺点：1. 会调用两次父类的构造函数
+       * */
+      // Student.prototype = new Person()
 
-      const Fn = function () {}
+      /** 4. 寄生组合式继承
+       * 优点：1. 可以继承父类的原型方法
+       * 缺点：1. 会调用两次父类的构造函数
+       * */
+      function Fn() {}
+      // 只把 Person 的原型方法继承过来，不继承 Person 的实例属性
       Fn.prototype = Person.prototype
-      console.log('🚀 ~ Person.prototype:', Person.prototype)
+
       Student.prototype = new Fn()
-
-      let s1 = new Student()
-      s1.name = 'Jerry'
-      s1.fruits.push('banana')
-      console.log(s1.fruits)
+      const s1 = new Student()
+      s1.name = '小红'
+      console.log(s1.name)
+      console.log(s1)
       s1.getName()
-      s1.get()
-      console.log('🚀 ~ s1:', s1)
 
-      console.log('---------------')
+      s1.say()
 
-      let s2 = new Student()
-      // s2.fruits.push('banana')
-      console.log(s2.fruits)
+      console.log('--------------------------------')
+
+      /** 5. class 继承
+       * */
+      class Person2 {
+        constructor() {
+          this.name = '小明'
+          this.fruits = ['apple']
+          this.getName = function () {
+            console.log(this.name)
+          }
+        }
+        say() {
+          console.log(`my name is ${this.name}`)
+        }
+      }
+
+      class Student2 extends Person2 {
+        constructor() {
+          super()
+          this.name = '小红'
+          this.fruits = ['apple', 'banana']
+        }
+      }
+      const s2 = new Student2()
+      console.log(s2.name)
+      console.log(s2)
       s2.getName()
-      s2.get()
-      console.log('🚀 ~ s2:', s2)
-    </script>
+      s2.say()
+    </script> -->
   </body>
 </html>

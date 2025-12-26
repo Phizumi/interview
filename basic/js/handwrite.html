@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>手写代码</title>
+  </head>
+  <body>
+    <script>
+      /**
+       * 解析 URL 参数（query string）为对象
+       * 例如：https://example.com?a=1&b=2&b=3&c=
+       * 返回：{ a: "1", b: ["2", "3"], c: "" }
+       */
+      function parseQuery(url) {
+        const queryStr = url.split('?')[1]
+        if (!queryStr) return {}
+
+        const params = {}
+        queryStr.split('&').forEach((pair, index) => {
+          const [key, value = ''] = pair.split('=')
+
+          if (params[key] === undefined) {
+            params[key] = value
+          } else if (Array.isArray(params[key])) {
+            console.log('params[key]', params[key])
+            params[key].push(value)
+          } else {
+            params[key] = [params[key], value]
+          }
+        })
+
+        return params
+      }
+      // console.log(parseQuery('https://example.com?a=1&b=2&b=3&c='))
+
+      /**
+       * 将树结构扁平化成数组（含 parentId）
+       * [{ id: 1, children: [ { id: 2 }, { id: 3 } ] }]
+       * =>
+       * [
+       *   { id: 1, parentId: null },
+       *   { id: 2, parentId: 1 },
+       *   { id: 3, parentId: 1 }
+       * ]
+       */
+      function flattenTree(tree, parentId = null, res = []) {
+        for (const node of tree) {
+          res.push({ id: node.id, parentId })
+          if (node.children) {
+            flattenTree(node.children, node.id, res)
+          }
+        }
+        return res
+      }
+      console.log(flattenTree([{ id: 1, children: [{ id: 2 }, { id: 3 }] }]))
+
+      setTimeout(() => {
+        console.log('setTimeout')
+      }, 0)
+
+      Promise.resolve().then(() => {
+        console.log('promise then')
+      })
+    </script>
+  </body>
+</html>

@@ -51,9 +51,8 @@ function deepClone(value) {
     }
     const result = Array.isArray(value) ? [] : {}
     cache.set(value, result)
-    console.log('cache', cache)
     for (let key in value) {
-      if (obj.hasOwnProperty(key)) {
+      if (value.hasOwnProperty(key)) {
         result[key] = __deepClone(value[key])
       }
     }
@@ -64,8 +63,8 @@ function deepClone(value) {
 }
 
 const newObj = deepClone(obj)
-console.log(newObj.arr !== obj.arr)
-console.log(newObj.sub !== obj.sub)
-console.log(newObj.arr[3] !== obj)
-console.log(newObj.arr[3] === newObj)
+// console.log(newObj.arr !== obj.arr)
+// console.log(newObj.sub !== obj.sub)
+// console.log(newObj.arr[3] !== obj)
+// console.log(newObj.arr[3] === newObj)
 console.log('newObj', newObj)
