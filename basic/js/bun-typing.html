@@ -14,7 +14,7 @@
         justify-content: center;
         align-items: center;
         height: 100vh;
-        background-color: #333;
+        background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
       }
       section {
         display: inline-block;
@@ -25,7 +25,12 @@
         text-align: left;
       }
       #blink {
+        display: inline-block;
+        width: 4px;
+        height: .9em;
+        border-radius: 4px;
         margin-left: 2px;
+        vertical-align: middle;
         animation: anim-blink 1s step-end infinite;
       }
       /* 打字或删除时禁用动画，保持常亮 */
@@ -49,7 +54,7 @@
         Bun is a fast JavaScript
         <br />
         <span id="typing">all-in-one-toolkit</span>
-        <span id="blink">|</span>
+        <span id="blink"></span>
       </h1>
     </section>
 
@@ -80,7 +85,7 @@
         currentHue = (currentHue + 0.3 + Math.random() * 0.5) % 360;
         const currentColor = `hsl(${currentHue}, 80%, 70%)`;
         typingEl.style.color = currentColor;
-        blinkEl.style.color = currentColor; // 光标随文字同色变动
+        blinkEl.style.backgroundColor = currentColor; // 光标随文字同色变动
 
         if (deltaTime >= delay) {
           const currentWord = words[wordIndex];
