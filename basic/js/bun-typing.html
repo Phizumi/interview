@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Typing</title>
+    <style>
+      * {
+        margin: 0;
+      }
+      body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #333;
+      }
+      section {
+        display: inline-block;
+        text-align: center;
+      }
+      h1 {
+        color: #fff;
+        text-align: left;
+      }
+      #blink {
+        margin-left: 2px;
+        animation: anim-blink 1s step-end infinite;
+      }
+      /* 打字或删除时禁用动画，保持常亮 */
+      #blink.static {
+        animation: none;
+      }
+      @keyframes anim-blink {
+        0%,
+        100% {
+          visibility: visible;
+        }
+        50% {
+          visibility: hidden;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <section>
+      <h1>
+        Bun is a fast JavaScript
+        <br />
+        <span id="typing">all-in-one-toolkit</span>
+        <span id="blink">|</span>
+      </h1>
+    </section>
+
+    <script>
+      const typingEl = document.querySelector("#typing");
+      const blinkEl = document.querySelector("#blink");
+
+      const words = [
+        "all-in-one-toolkit",
+        "runtime",
+        "package manager",
+        "bundler",
+      ];
+
+      let wordIndex = 0;
+      let charIndex = words[0].length; // 初始状态展示完整的第一个词
+      let isDeleting = true; // 接下来应该执行删除动作
+
+      let lastTime = 0;
+      let delay = 2000; // 初始停顿时间
+      let currentHue = Math.random() * 360; // 初始随机色相
+
+      function typeLoop(time) {
+        if (!lastTime) lastTime = time;
+        const deltaTime = time - lastTime;
+
+        // 随时间推移不停变动颜色 (利用 HSL 和随机增量实现平滑且具随机性的变色)
+        currentHue = (currentHue + 0.3 + Math.random() * 0.5) % 360;
+        const currentColor = `hsl(${currentHue}, 80%, 70%)`;
+        typingEl.style.color = currentColor;
+        blinkEl.style.color = currentColor; // 光标随文字同色变动
+
+        if (deltaTime >= delay) {
+          const currentWord = words[wordIndex];
+
+          // 更新文本内容，使用 textContent 性能更好
+          typingEl.textContent = currentWord.substring(0, charIndex);
+
+          // 分别设定删除和打字的速度，删除应更快
+          let nextDelay = isDeleting ? 30 : 70;
+
+          // 边界判断状态机
+          if (!isDeleting && charIndex === currentWord.length) {
+            // 一个新词打完了，停顿并准备删除
+            isDeleting = true;
+            nextDelay = 2000;
+            blinkEl.classList.remove("static"); // 停顿期间恢复光标闪烁
+          } else if (isDeleting && charIndex === 0) {
+            // 当前词删光了，切换下一个词，短暂停顿后打字
+            isDeleting = false;
+            wordIndex = (wordIndex + 1) % words.length;
+            nextDelay = 500;
+            blinkEl.classList.remove("static"); // 停顿期间恢复光标闪烁
+          } else {
+            // 正在打字或删除的过程，禁用光标闪烁
+            blinkEl.classList.add("static");
+            // 移动游标
+            isDeleting ? charIndex-- : charIndex++;
+          }
+
+          delay = nextDelay;
+          lastTime = time;
+        }
+
+        requestAnimationFrame(typeLoop);
+      }
+
+      // 初始化启动：光标保持闪烁状态，利用 requestAnimationFrame 开始循环
+      blinkEl.classList.remove("static");
+      requestAnimationFrame(typeLoop);
+    </script>
+  </body>
+</html>
